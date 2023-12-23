@@ -1,0 +1,868 @@
+    1  apt-get update
+    2  curl -sfL https://get.k3s.io | sh - 
+    3  sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm
+    4  kubectl get po
+    5  ping 65.109.80.243
+    6  sudo k3s kubectl get node 
+    7  sudo k3s kubectl get node -o wide
+    8  export VERSION=$(curl -s https://storage.googleapis.com/kubevirt-prow/release/kubevirt/kubevirt/stable.txt)
+    9  echo $VERSION
+   10  kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-operator.yaml
+   11  mkdir kube-virt
+   12  cd kube-virt/
+   13  ls
+   14  curl -LO https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-cr.yaml
+   15  cat /var/lib/rancher/k3s/server/node-token
+   16  ifcomfig
+   17  ifconfig
+   18  cat /var/lib/rancher/k3s/server/node-token
+   19  netstat tulpn
+   20  /usr/local/bin/k3s-uninstall.sh
+   21  vim /etc/hostname 
+   22  hostname
+   23  hostname node001
+   24  ls
+   25  hostname
+   26  history
+   27  exit
+   28  history
+   29  sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm
+   30  curl -sfL https://get.k3s.io | sh -
+   31  cat /var/lib/rancher/k3s/server/node-token
+   32  kubectl get nodes
+   33  export VERSION=$(curl -s https://storage.googleapis.com/kubevirt-prow/release/kubevirt/kubevirt/stable.txt)
+   34  echo $VERSION
+   35  kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-operator.yaml
+   36  kubectl get kubevirt.kubevirt.io/kubevirt -n kubevirt -o=jsonpath="{.status.phase}"
+   37  kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-cr.yaml
+   38  kubectl get kubevirt.kubevirt.io/kubevirt -n kubevirt -o=jsonpath="{.status.phase}"
+   39  kubectl get kubevirt.kubevirt.io/kubevirt -n kubevirt
+   40  VERSION=$(kubectl get kubevirt.kubevirt.io/kubevirt -n kubevirt -o=jsonpath="{.status.observedKubeVirtVersion}")
+   41  ARCH=$(uname -s | tr A-Z a-z)-$(uname -m | sed 's/x86_64/amd64/') || windows-amd64.exe
+   42  echo ${ARCH}
+   43  curl -L -o virtctl https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/virtctl-${VERSION}-${ARCH}
+   44  chmod +x virtctl
+   45  sudo install virtctl /usr/local/bin
+   46  kubectl get all -n kubevirt
+   47  l
+   48  cd kube-virt/
+   49  ls
+   50  cat kubevirt-cr.yaml 
+   51  kubectl apply -f kubevirt-cr.yaml 
+   52  curl -LO https://kubevirt.io/labs/manifests/vm.yaml
+   53  ls
+   54  cat vm.yaml 
+   55  kubectl apply -f https://kubevirt.io/labs/manifests/vm.yaml
+   56  virtctl ssh testvm
+   57  virtctl console testvm
+   58  cd ..
+   59  virtctl console testvm
+   60  ./virtctl console testvm
+   61  echo ${ARCH}
+   62  curl -L -o virtctl https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/virtctl-${VERSION}-${ARCH}
+   63  chmod +x virtctl
+   64  ls
+   65  ./virtctl console testvm
+   66  head virtctl 
+   67  curl -LO https://github.com/kubevirt/kubevirt/releases/download/v1.1.0/virtctl-v1.1.0-linux-amd64
+   68  mv virtctl-v1.1.0-linux-amd64 virtctl
+   69  ls
+   70  install virtctl /usr/local/bin
+   71  virtctl console testvm
+   72  vim .bashrc 
+   73  export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+   74  virtctl console testvm
+   75  kubectl get vmi
+   76  ls
+   77  cd kube-virt/
+   78  ls
+   79  kubectl apply -f vm.yaml 
+   80  virtctl console testvm
+   81  kubectl get vmi
+   82  kubectl get vmi --all-namespaces
+   83  kubectl get vms
+   84  virtctl start testvm
+   85  virtctl console testvm
+   86  l
+   87  ls
+   88  kubectl delete vm testvm
+   89  export VERSION=$(basename $(curl -s -w %{redirect_url} https://github.com/kubevirt/containerized-data-importer/releases/latest))
+   90  kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-operator.yaml
+   91  kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-cr.yaml
+   92  kubectl get cdi cdi -n cdi
+   93  kubectl get pods -n cdi
+   94  cat <<EOF > dv_fedora.yml
+   95  apiVersion: cdi.kubevirt.io/v1beta1
+   96  kind: DataVolume
+   97  metadata:
+   98    name: "fedora"
+   99  spec:
+  100    storage:
+  101      resources:
+  102        requests:
+  103          storage: 5Gi
+  104    source:
+  105      http:
+  106        url: "https://download.fedoraproject.org/pub/fedora/linux/releases/37/Cloud/x86_64/images/Fedora-Cloud-Base-37-1.7.x86_64.raw.xz"
+  107  EOF
+  108  kubectl create -f dv_fedora.yml
+  109  kubectl get pvc fedora -o yaml
+  110  kubectl get DataVolume
+  111  watch kubectl get DataVolume
+  112  kubectl describe DataVolume
+  113  kubectl get pvc fedora -o yaml
+  114  kubectl get pods -n cdi
+  115  kubectl describe DataVolume
+  116  curl -LO https://cloud-images.ubuntu.com/daily/server/daily/server/jammy/current/jammy-server-cloudimg-amd64-disk-kvm.img
+  117  virtctl -n testing image-upload dv ubuntu_jammy --image-path=./jammy-server-cloudimg-amd64-disk-kvm.img --uploadproxy-url=https://127.0.0.1:31001 --insecure
+  118  virtctl -n testing image-upload dv ubuntu_jammy --size=300M --image-path=./jammy-server-cloudimg-amd64-disk-kvm.img --uploadproxy-url=https://127.0.0.1:31001 --insecure
+  119  virtctl image-upload dv ubuntu_jammy --size=300M --image-path=./jammy-server-cloudimg-amd64-disk-kvm.img --uploadproxy-url=https://127.0.0.1:31001 --insecure
+  120  virtctl image-upload dv ubuntu-jammy --size=300M --image-path=./jammy-server-cloudimg-amd64-disk-kvm.img --uploadproxy-url=https://127.0.0.1:31001 --insecure
+  121  kubectl apply -f - <<EOF
+  122  apiVersion: storage.k8s.io/v1
+  123  kind: StorageClass
+  124  metadata:
+  125    name: local
+  126    annotations:
+  127      storageclass.kubernetes.io/is-default-class: "true"
+  128  provisioner: rancher.io/local-path
+  129  volumeBindingMode: WaitForFirstConsumer
+  130  EOF
+  131  kubectl patch --type merge -p '{"spec": {"claimPropertySets": [{"accessModes": ["ReadWriteOnce"]}]}}' StorageProfile local
+  132  virtctl image-upload dv ubuntu-jammy --size=300M --image-path=./jammy-server-cloudimg-amd64-disk-kvm.img --uploadproxy-url=https://127.0.0.1:31001 --insecure
+  133  kubectl delete datavolumes ubuntu-jammy
+  134  virtctl image-upload dv ubuntu-jammy --size=300M --image-path=./jammy-server-cloudimg-amd64-disk-kvm.img --uploadproxy-url=https://127.0.0.1:31001 --insecure
+  135  ls
+  136  cd kube-virt/
+  137  ls
+  138  kubectl get dv --all-namespaces
+  139  kubectl describe dv WaitForFirstConsumer 
+  140  kubectl describe dv ubuntu-jammy
+  141  ls
+  142  cp vm jammy-vm.yaml
+  143  cp vm.yaml jammy-vm.yaml
+  144  ls
+  145  vim jammy-
+  146  vim jammy-vm.yaml 
+  147  kubectl get pvc
+  148  kubectl describe pvc
+  149  ls
+  150  curl -LO apiVersion: kubevirt.io/v1
+  151  kind: VirtualMachine
+  152  metadata:
+  153  spec:
+  154  curl -LO https://kubevirt.io/labs/manifests/vm1_pvc.yml
+  155  ls
+  156  vim vm1_pvc.yml 
+  157  kubectl get pvc
+  158  vim vm1_pvc.yml 
+  159  kubectl apply -f vm1_pvc.yml 
+  160  kubectl describe vm vm1
+  161  virtctl ssh vm1
+  162  kubectl describe vm vm1
+  163  kubectl start vm1
+  164  virtctl start vm1
+  165  virtctl console vm1
+  166  virtctl describe vm1
+  167  kubectl describe vm1
+  168  kubectl describe vm vm1
+  169  kubectl describe pvc
+  170  kubectl describe vm vm1
+  171  virtctl stop vm1
+  172  kubectl describe vm vm1
+  173  virtctl start vm1
+  174  kubectl describe vm vm1
+  175  virtctl console vm1
+  176  ps -aux
+  177  virsh
+  178  sl
+  179  ls
+  180  cat vm1_pvc.yml 
+  181  ls
+  182  kubectl apply -f vm.yaml 
+  183  kubectl get po 
+  184  kubectl get vm
+  185  virtctl start testvm
+  186  kubectl get vm
+  187  virsh list --all
+  188  kubectl get p o
+  189  kubectl get po
+  190  kubectl logs upload-ubuntu-jammy
+  191  kubectl logs cdi-upload-ubuntu-jammy
+  192  kubectl logs virt-launcher-testvm-ztqj8
+  193  kubectl logs cdi-upload-ubuntu-jammy
+  194  kubectl get po
+  195  ls
+  196  vim vm1_pvc.yml 
+  197  docker ps
+  198  ps 
+  199  virsh list --all
+  200  kubectl get po 
+  201  kubectl exec -it cdi-upload-ubuntu-jammy /bin/bash
+  202  kubectl get pods
+  203  kubectl exec -it virt-launcher-testvm-ztqj8 /bin/bash
+  204  kubectl get vms
+  205  kubectl describe vm1 
+  206  kubectl describe vm vm1 
+  207  ls
+  208  kubectl delete vm1 
+  209  kubectl delete vm vm1 
+  210  ls
+  211  kubectl get cdi cdi -n cdi
+  212  kubectl get pods -n cdi
+  213  cat <<EOF > dv_fedora.yml
+  214  apiVersion: cdi.kubevirt.io/v1beta1
+  215  kind: DataVolume
+  216  metadata:
+  217    name: "fedora"
+  218  spec:
+  219    storage:
+  220      resources:
+  221        requests:
+  222          storage: 5Gi
+  223    source:
+  224      http:
+  225        url: "https://download.fedoraproject.org/pub/fedora/linux/releases/37/Cloud/x86_64/images/Fedora-Cloud-Base-37-1.7.x86_64.raw.xz"
+  226  EOF
+  227  kubectl create -f dv_fedora.yml
+  228  kubectl get pvc fedora -o yaml
+  229  kubectl get sc
+  230  kubectl get pvc fedora -o yaml
+  231  kubectl describe pvc fedora -o yaml
+  232  kubectl describe pvc fedora
+  233  kubectl logs -n cdi cdi_pod
+  234  kubectl get po -n cdi
+  235  kubectl logs -n cdi cdi-operator-85cbd46d64-bkwkz
+  236  kubectl get po -n cdi cdi-uploadproxy-bb75fdd8-tkf5m
+  237  kubectl logs -n cdi cdi-uploadproxy-bb75fdd8-tkf5m
+  238  kubectl logs -n cdi cdi-deployment-5d7d579f97-5wkn7
+  239  curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  240  h
+  241  helm
+  242  helm repo add grafana https://grafana.github.io/helm-charts
+  243  helm repo update
+  244  ls
+  245  cd kube-virt/
+  246  ls
+  247  mkdir loki
+  248  cd k
+  249  cd loki/
+  250  ls
+  251  vim values.yaml
+  252  helm install --values values.yaml loki --namespace=loki grafana/loki
+  253  kubectl create namespace loki
+  254  helm install --values values.yaml loki --namespace=loki grafana/loki
+  255  kubectl get scv -n loki
+  256  kubectl get svc -n loki
+  257  kubectl edit svc -n loki
+  258  ls
+  259  cd ..
+  260  mkdir ingress-controller
+  261  cd ingress-controller/
+  262  ls
+  263  curl -LO https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/deploy.yaml
+  264  vim deploy.yaml 
+  265  vim deploy.yaml
+  266  ls
+  267  cd kube-virt/
+  268  ls
+  269  cd ingress-controller/
+  270  ls
+  271  curl -LO
+  272  curl -LO https://raw.githubusercontent.com/mooperd/kubernetes-deployment/master/ssl/lets-encrypt.sh
+  273  ls
+  274  hostname
+  275  python3 -m venv .venv
+  276  apt install python3.10-venv
+  277  ls
+  278  vim deploy.yaml 
+  279  ls
+  280  vim deploy.yaml 
+  281  ls
+  282  source .venv/bin/activate
+  283  rm .venv
+  284  rm -Rf .venv/
+  285  ls
+  286  python3 -m venv .venv
+  287  source .venv/bin/activate
+  288  ls
+  289  pip install awscli
+  290  pip install certbot-dns-route53
+  291  ls
+  292  aws configure
+  293  ls
+  294  cd kube-virt/
+  295  ls
+  296  cd ingress-controller/
+  297  ls
+  298  aws s3 ls
+  299  source .venv/bin/activate
+  300  aws s3 ls
+  301  sl
+  302  ls
+  303  export TLD=decimal3.com
+  304  export NAMESPACE=default
+  305  lets-encrypt.sh --real
+  306  bach lets-encrypt.sh --real
+  307  bash lets-encrypt.sh --real
+  308  ls
+  309  kubectl apply -f deploy.yaml 
+  310  ls
+  311  kubectl get namespaces
+  312  kubectl get svc -n loki
+  313  ls
+  314  cd ..
+  315  ls
+  316  cd loki/
+  317  ls
+  318  vim ingress.yaml
+  319  kubectl apply -f ingress.yaml 
+  320  ls
+  321  l
+  322  ls
+  323  vim values.yaml 
+  324  ls
+  325  kubectl get po -n ingress-nginx
+  326  kubectl logs ingress-nginx-controller-54d67d5fd8-jx44k -n ingress-nginx
+  327  ls
+  328  vim ingress.yaml 
+  329  kubectl apply -f ingress.yaml 
+  330  kubectl logs ingress-nginx-controller-54d67d5fd8-jx44k -n ingress-nginx
+  331  ls
+  332  cd ..
+  333  ls
+  334  vim ingress-controller/deploy.yaml 
+  335  kubectl apply -f ingress-controller/deploy.yaml 
+  336  ls
+  337  kubectl logs ingress-nginx-controller-54d67d5fd8-jx44k -n ingress-nginx
+  338  kubectl get po -n ingress-nginx
+  339  kubectl logs ingress-nginx-controller-8556ffffdc-vv45b -n ingress-nginx
+  340  kubectl get secrets
+  341  vim ingress-controller/deploy.yaml 
+  342  kubectl apply -f  ingress-controller/deploy.yaml 
+  343  kubectl get po -n ingress-nginx
+  344  kubectl logs ingress-nginx-controller-7d87c96cf4-2kg8p -n ingress-nginx
+  345  ls
+  346  kubectl get po -n ingress-nginx
+  347  kubectl get secrets
+  348  vim ingress-controller/deploy.yaml 
+  349  kubectl get svc --all-namespaces
+  350  kubectl edit svc traefik -n kube-system
+  351  kubectl delete svc traefik -n kube-system
+  352  kubectl edit svc traefik -n kube-system
+  353  vim ingress-controller/deploy.yaml 
+  354  netstat -tulpn
+  355  vim ingress-controller/deploy.yaml 
+  356  netstat -tulpn
+  357  ls
+  358  kubectl get svc -n ingress-nginx
+  359  kubectl delete svc ingress-nginx-controller -n ingress-nginx
+  360  vim ~/.bashrc 
+  361  exit
+  362  kubectl get pod -n ingress-nginx 
+  363  netstat tulpn
+  364  netstat -tulpn
+  365  kubectl describe svc -n ingress-nginx ingress-nginx-controller-admission 
+  366  ls
+  367  cd kube-virt/
+  368  ls
+  369  cd ingress-controller/
+  370  ls
+  371  kubectl apply -f deploy.yaml 
+  372  netstat -tulpn
+  373  ls
+  374  vim deploy.yaml 
+  375  kubectl apply -f deploy.yaml 
+  376  kubectl get svc -n ingress-nginx 
+  377  kubectl delete svc ingress-nginx-controller -n ingress-nginx
+  378  ls
+  379  kubectl apply -f deploy.yaml 
+  380  kubectl delete svc ingress-nginx-controller -n ingress-nginx
+  381  ls
+  382  vim deploy.yaml 
+  383  kubectl apply -f deploy.yaml 
+  384  vim deploy.yaml 
+  385  kubectl delete svc ingress-nginx-controller -n ingress-nginx
+  386  kubectl apply -f deploy.yaml 
+  387  netstat tulpn
+  388  netstat -tulpn
+  389  kubectl get svc -n ingress-nginx 
+  390  ls
+  391  cd ..
+  392  ls
+  393  kubectl get svc -n loki 
+  394  ls
+  395  cd loki/
+  396  ls
+  397  vim ingress.yaml 
+  398  kubectl apply -f ingress.yaml 
+  399  vim ingress.yaml 
+  400  kubectl get po -n ingress-nginx 
+  401  l
+  402  kubectl logs ingress-nginx-controller-7d87c96cf4-2kg8p -n ingress-nginx 
+  403  vim ingress.yaml 
+  404  kubectl apply -f ingress.yaml 
+  405  vim ingress.yaml 
+  406  kubectl apply -f ingress.yaml 
+  407  vim ingress.yaml 
+  408  kubectl get po -n ingress-nginx 
+  409  kubectl get svc -n loki 
+  410  vim ingress.yaml 
+  411  kubectl apply -f ingress.yaml 
+  412  vim ingress.yaml 
+  413  kubectl apply -f ingress.yaml 
+  414  kubectl get po -n loki # apply -f ingress.yaml 
+  415  kubectl get po -n loki -o wide
+  416  kubectl get deployment -n loki -o wide
+  417  kubectl get deployment loki-grafana-agent-operator -n loki -o yaml
+  418  kubectl get svc -n loki -o yaml
+  419  helm 
+  420  helm lost
+  421  helm list
+  422  kubectl get namespaces
+  423  kubectl delete namespace loki
+  424  helm repo update
+  425  vim values.yaml 
+  426  helm install --values values.yaml loki --namespace=loki grafana/loki
+  427  kubectl create namespace loki
+  428  helm install --values values.yaml loki --namespace=loki grafana/loki
+  429  kubectl delete namespace loki
+  430  helm install --values values.yaml loki --namespace=loki grafana/loki-stack
+  431  kubectl create namespace loki
+  432  helm install --values values.yaml loki --namespace=loki grafana/loki-stack
+  433  kubectl delete namespace loki
+  434  kubectl get namespaces
+  435  kubectl create namespace grafana
+  436  helm install --values values.yaml loki --namespace=grafana grafana/loki-stack
+  437  kubectl delete ClusterRole loki-promtail
+  438  helm install --values values.yaml loki --namespace=grafana grafana/loki-stack
+  439  kubectl delete ClusterRoleBinding loki-promtail
+  440  helm install --values values.yaml loki --namespace=grafana grafana/loki-stack
+  441  helm install --values values.yaml loki --namespace=grafana grafana/grafanan
+  442  helm install --values values.yaml loki --namespace=grafana grafana/grafana
+  443  helm install --values values.yaml loki --namespace=grafana grafana
+  444  helm install --values values.yaml loki --namespace=grafana grafana/grafana 
+  445  helm list
+  446  helm list --all
+  447  helm list -a
+  448  helm list -aA
+  449  helm remove traefik
+  450  helm uninstal traefik
+  451  helm uninstall traefik
+  452  helm install --values values.yaml grafana --namespace=grafana grafana/grafana
+  453  kubectl get svc -n grafana
+  454  ls
+  455  vim ingress.yaml 
+  456  kubectl apply -f ingress.yaml 
+  457  kubectl get po -n grafana
+  458  kubectl exec -it grafana-f9466f8b4-vcbml -n grafana /bin/sh
+  459  kubectl get svc -n grafana
+  460  kubectl exec -it grafana-f9466f8b4-vcbml -n grafana /bin/sh
+  461  kubectl logs grafana-f9466f8b4-vcbml -n grafana
+  462  kubectl logs grafana-f9466f8b4-vcbml -n grafana -f
+  463  kubectl exec -it grafana-f9466f8b4-vcbml -n grafana /bin/sh
+  464  kubectl exec -it grafana-f9466f8b4-vcbml -n grafana /bin/sh
+  465  kubectl get po --all-namespaces
+  466  kubectl exec -it grafana-f9466f8b4-vcbml -n grafana /bin/sh
+  467  kubectl logs grafana-f9466f8b4-vcbml -n grafana -f
+  468  ls
+  469  kubectl delete namespace grafana
+  470  helm update repo Grafana
+  471  ls
+  472  cd kube-virt/
+  473  ls
+  474  cd k
+  475  ls
+  476  cd loki/
+  477  ls
+  478  vim values.yaml 
+  479  vim values2.yaml 
+  480  mv values2.yaml grafana-loki-values.yml
+  481  helm upgrade –install loki-logging grafana/loki-stack -n logging --create-namespace -f grafana-loki-values.yml
+  482  history | grep helm
+  483  helm install loki-logging grafana/loki-stack -n logging --create-namespace -f grafana-loki-values.yml
+  484  kubectl get namesapces
+  485  kubectl get namespaces
+  486  kubectl get po --all-namespaces
+  487  kubectl get all -n logging 
+  488  kubectl get secret --namespace logging loki-logging-grafana -ojsonpath="{.data.admin-password}" | base64 --decode ; echo
+  489  l
+  490  ls
+  491  vim ingress.yaml 
+  492  kubectl apply -f ingress.yaml n
+  493  kubectl apply -f ingress.yaml
+  494  ls
+  495  vim grafana-loki-values.yml 
+  496  ls
+  497  cd kube-virt/
+  498  ls
+  499  cat vm.yaml 
+  500  ls
+  501  vi vm.yaml 
+  502  ls
+  503  cat vm1_pvc.yml 
+  504  vi vm.yaml 
+  505  kubectl apply -f vm.yaml 
+  506  vi vm.yaml 
+  507  kubectl apply -f vm.yaml 
+  508  kubectl ssh fedora@vm001
+  509  virtctl ssh fedora@vm001
+  510  virtctl console fedora@vm001
+  511  virtctl console vm001
+  512  ls
+  513  vi vm.yaml 
+  514  virtctl console vm001
+  515  ls
+  516  ls 
+  517  ls /var/lib/rancher/k3s/server/db
+  518  cls
+  519  ls
+  520  cd /var/lib/rancher/k3s/server/
+  521  ls
+  522  sqlite3
+  523  apt install sqlite3
+  524  sqlite3 db
+  525  ls
+  526  cd db/etcd/
+  527  ls
+  528  sqlite3 name
+  529  l
+  530  ls
+  531  cd ..
+  532  ls
+  533  sqlite3 state.db 
+  534  ls
+  535  kubectl get vms
+  536  kubectl delete testvm
+  537  kubectl delete vm testvm
+  538  kubectl delete vm vm001
+  539  ls
+  540  cp dv_fedora.yml dv_ubuntu.yaml
+  541  vim dv_ubuntu.yaml 
+  542  kubectl create -f dv_ubuntu.yaml 
+  543  vim dv_ubuntu.yaml 
+  544  kubectl create -f dv_ubuntu.yaml 
+  545  kubectl get pvc
+  546  kubectl get pod
+  547  kubectl logs cdi-upload-ubuntu-jammy
+  548  kubectl get pod
+  549  kubectl logs cdi-upload-ubuntu-jammy
+  550  kubectl get dv
+  551  vim dv_ubuntu.yaml 
+  552  kubectl apply -f dv_ubuntu.yaml 
+  553  kubectl get cdiconfig config
+  554  kubectl get cdiconfig config -o yaml
+  555  ls
+  556  vim dv_ubuntu.yaml 
+  557  kubectl apply -f dv_ubuntu.yaml 
+  558  kubectl get pod
+  559  kubectl delete po cdi-upload-ubuntu-jammy
+  560  kubectl get pod
+  561  kubectl get dv
+  562  s
+  563  ls
+  564  curl -LO https://kubevirt.io/labs/manifests/vm1_pvc.yml
+  565  ls
+  566  cat vm1_pvc.yml 
+  567  ls
+  568  cat dv_ubuntu.yaml 
+  569  vim vm1_pvc.yml 
+  570  kubectl get pvc
+  571  vim vm1_pvc.yml 
+  572  ssh keygen -t ed25519
+  573  ssh-keygen -t ed25519
+  574  cat .ssh/id_ed25519.pub 
+  575  ls
+  576  vim vm1_pvc.yml 
+  577  mv vm1_pvc.yml ubuntu-jammy-vm.yaml
+  578  kubectl apply -f ubuntu-jammy-vm.yaml 
+  579  kubectl get vm
+  580  watch kubectl get vm
+  581  kubectl describe vm
+  582  watch kubectl describe vm
+  583  kubectl describe vm
+  584  kubectl get vm
+  585  virtctl console ubuntu-jammy-vm
+  586  ls
+  587  cat ubuntu-jammy-vm.yaml 
+  588  virtctl console ubuntu-jammy-vm
+  589  ls
+  590  virtctl ssh ubuntu-jammy-vm
+  591  virtctl console ubuntu-jammy-vm
+  592  virtctl stop ubuntu-jammy-vm
+  593  virtctl console ubuntu-jammy-vm
+  594  virtctl start ubuntu-jammy-vm
+  595  virtctl console ubuntu-jammy-vm
+  596  ls
+  597  kubectl get vm
+  598  kubectl delete vm ubuntu-jammy-vm
+  599  ls
+  600  vim ubuntu-jammy-vm.yaml 
+  601  kubectl apply -f ubuntu-jammy-vm.yaml 
+  602  virtctl console ubuntu-jammy-vm
+  603  ls
+  604  vim ubuntu-jammy-vm.yaml 
+  605  kubectl delete vm ubuntu-jammy-vm
+  606  virtctl console ubuntu-jammy-vm
+  607  kubectl apply -f ubuntu-jammy-vm.yaml 
+  608  virtctl console ubuntu-jammy-vm
+  609  la
+  610  ls
+  611  netstat tulpn
+  612  ip addr
+  613  ls
+  614  kubectl get po
+  615  kubectl exec -it cdi-upload-ubuntu-jammy /bin/bash
+  616  kubectl get vm
+  617  kubectl get po
+  618  kubectl exec -it virt-launcher-ubuntu-jammy-vm-mxb97 /bin/bash
+  619  ls
+  620  cat dv_ubuntu.yaml 
+  621  vim ubuntu-jammy-vm.yaml 
+  622  kubectl apply -f ubuntu-jammy-vm.yaml 
+  623  kubectl get po
+  624  watch kubectl get po
+  625  kubectl get vm
+  626  virtctl ssh ubuntu-jammy-vm-0
+  627  virtctl console ubuntu-jammy-vm-0
+  628  echo possible | mkpasswd -m sha-512 -s
+  629  apt install whois
+  630  echo possible | mkpasswd -m sha-512 -s
+  631  echo X9deiX9dei | mkpasswd -m sha-512 -s
+  632  echo X9deiX9dei | mkpasswd -m sha-512 -s > meow
+  633  cat meow 
+  634  ls
+  635  vim ubuntu-jammy-vm.yaml 
+  636  kubectl apply -f ubuntu-jammy-vm.yaml 
+  637  vim ubuntu-jammy-vm.yaml 
+  638  kubectl apply -f ubuntu-jammy-vm.yaml 
+  639  kubectl get po
+  640  kubectl get vmm
+  641  kubectl get vm
+  642  virtctl console ubuntu-jammy-vm-2
+  643  ls
+  644  vim ubuntu-jammy-vm.yaml 
+  645  kubectl apply -f ubuntu-jammy-vm.yaml 
+  646  kubectl get vm
+  647  virtctl console ubuntu-jammy-vm-3
+  648  ls
+  649  vim ubuntu-jammy-vm.yaml 
+  650  cat << END > startup-script.sh
+  651  #!/bin/bash
+  652  echo "Hi from startup script!"
+  653  END
+  654  vim ubuntu-jammy-vm.yaml 
+  655  ls
+  656  vim startup-script.sh 
+  657  kubectl create secret generic my-vmi-secret --from-file=userdata=startup-script.sh
+  658  vim ubuntu-jammy-vm.yaml 
+  659  kubectl apply -f ubuntu-jammy-vm.yaml 
+  660  vim ubuntu-jammy-vm.yaml 
+  661  kubectl apply -f ubuntu-jammy-vm.yaml 
+  662  vim ubuntu-jammy-vm.yaml 
+  663  kubectl apply -f ubuntu-jammy-vm.yaml 
+  664  vim ubuntu-jammy-vm.yaml 
+  665  kubectl apply -f ubuntu-jammy-vm.yaml 
+  666  vim ubuntu-jammy-vm.yaml 
+  667  kubectl apply -f ubuntu-jammy-vm.yaml 
+  668  vim ubuntu-jammy-vm.yaml 
+  669  kubectl apply -f ubuntu-jammy-vm.yaml 
+  670  vim ubuntu-jammy-vm.yaml 
+  671  kubectl apply -f ubuntu-jammy-vm.yaml 
+  672  vim ubuntu-jammy-vm.yaml 
+  673  ls
+  674  vim ubuntu-jammy-vm.yaml 
+  675  history
+  676  kubectl get vm
+  677  virtctl console ubuntu-jammy-6
+  678  ssh ubuntu@10.42.1.69
+  679  ls
+  680  exit
+  681  ls
+  682  curl https://kubevirt.io/labs/manifests/vm1_pvc.yml
+  683  ls
+  684  vim ubuntu-jammy-vm.yaml 
+  685  cat .ssh/id_ed25519.pub 
+  686  vim ubuntu-jammy-vm.yaml 
+  687  kubectl apply -f ubuntu-jammy-vm.yaml 
+  688  kubectl get po
+  689  kubectl get vm
+  690  virtctl ssh ubuntu-jammy-5
+  691  virtctl ssh ubuntu@ubuntu-jammy-5
+  692  ls
+  693  vim ubuntu-jammy-vm.yaml 
+  694  virtctl ssh root@ubuntu-jammy-5
+  695  vim ubuntu-jammy-vm.yaml 
+  696  cat .ssh/id_ed25519.pub 
+  697  vim ubuntu-jammy-vm.yaml 
+  698  kubectl apply -f ubuntu-jammy-vm.yaml 
+  699  vim ubuntu-jammy-vm.yaml 
+  700  cat ubuntu-jammy-vm.yaml 
+  701  kubectl get vm
+  702  kubectl delete vm --all
+  703  kubectl delete DataVolume --all
+  704  ls
+  705  vim ubuntu-jammy-vm.yaml 
+  706  ls
+  707  kubectl apply -f ubuntu-jammy-vm.yaml
+  708  virtctl ssh root@ubuntu-jammy-5
+  709  virtctl ssh root@ubuntu-jammy-6
+  710  virtctl ssh ubuntu@ubuntu-jammy-6
+  711  virtctl ssh andrew@ubuntu-jammy-6
+  712  virtctl console ubuntu-jammy-6
+  713  ls
+  714  vim ubuntu-jammy-vm.yaml
+  715  virtctl console ubuntu-jammy-6
+  716  ls
+  717  virtctl ssh ubunut@ubuntu-jammy-6
+  718  virtctl console ubuntu-jammy-6
+  719  ls
+  720  vim ubuntu-jammy-vm.yaml 
+  721  ls
+  722  curl -fsSL https://code-server.dev/install.sh | sh
+  723  sudo systemctl enable --now code-server@andrew
+  724  sudo andrew
+  725  su - andrew
+  726  exit
+  727  sudo systemctl restart --now code-server@andrew
+  728  exit
+  729  ls
+  730  sudo vi /etc/network/interfaces 
+  731  sudo vi /etc/network/interfaces
+  732  sudo vi /etc/network/interfaces 
+  733  ip addr
+  734  systemctl reload network
+  735  systemctl reload networking
+  736  systemctl restart network-manager
+  737  brctl
+  738  brctl addbr br0
+  739  ls
+  740  ip addr
+  741  bridge link
+  742  kubectl get po --all
+  743  kubectl get po --all-namespaces
+  744  adduser andrew
+  745  env
+  746  cat /etc/rancher/k3s/k3s.yaml
+  747  kubectl create namespace 302a4299-736e-4ef3-84fc-a9f400e84b24
+  748  ls
+  749  cat kube-virt/
+  750  ls
+  751  cat ubuntu-jammy-vm.yaml 
+  752  kubectl get namespaces
+  753  kubectl get vm -n 302a4299-736e-4ef3-84fc-a9f400e84b24
+  754  kubectl get all -n 302a4299-736e-4ef3-84fc-a9f400e84b24
+  755  kubectl get vm
+  756  kubectl get vm --all-namespaces
+  757  kubectl get DataVolume
+  758  kubectl get DataVolume --all-namespaces
+  759  ls
+  760  cat ubuntu-jammy-vm.yaml 
+  761  ls
+  762  cp ubuntu-jammy-vm.yaml /home/andrew/tailwind-flask-starter/
+  763  chown andrew:andrew /home/andrew/tailwind-flask-starter/ubuntu-jammy-vm.yaml 
+  764  kubectl get po
+  765  kubectl get pod my-pod -o yaml
+  766  exit
+  767  kubectl get vm
+  768  kubectl get ing --all-namespaces
+  769  la
+  770  vim ubuntu-jammy-vm.yaml
+  771  l
+  772  ls
+  773  cd kube-virt/
+  774  ls
+  775  cat jammy-vm.yaml 
+  776  ls
+  777  cat vm1_pvc.yml 
+  778  ls
+  779  cat /home/andrew/.config/code-server/config.yaml 
+  780  ls
+  781  cat dv_fedora.yml 
+  782  ls
+  783  cat kubevirt-cr.yaml 
+  784  cat vm.yaml 
+  785  ls
+  786  cat vm1_pvc.yml 
+  787  ls
+  788  cd l
+  789  cd ..
+  790  ls
+  791  cat ubuntu-jammy-vm.yaml 
+  792  ls
+  793  pvsh
+  794  apt install pdsh
+  795  ls
+  796  vim ubuntu-jammy-vm.yaml 
+  797  for NUM in {1..10}; echo $NUM; done
+  798  for NUM in {1..10}; do echo $NUM; done
+  799  for NUM in {1..10}; do echo $i; done
+  800  ls
+  801  cat ubuntu-jammy-vm.yaml 
+  802  ls
+  803  for NUM in {1..10}; do cat ubuntu-jammy-vm.yaml | envsubst | kubectl apply -f - ; done
+  804  vim ubuntu-jammy-vm.yaml
+  805  for NUM in {1..10}; do cat ubuntu-jammy-vm.yaml | envsubst ; done
+  806  for NUM in {1..10}; do echo $NUM cat ubuntu-jammy-vm.yaml | envsubst ; done
+  807  for NUM in {1..10}; do echo $NUM | cat ubuntu-jammy-vm.yaml | envsubst ; done
+  808  for NUM in {1..10}; do export NUM=$NUM | cat ubuntu-jammy-vm.yaml | envsubst ; done
+  809  for NUM in {1..10}; do echo $NUM ; done
+  810  for NUM in {001..010}; do echo $NUM ; done
+  811  for NUM in {001..010}; do echo \$NUM  ; done
+  812  for NUM in {001..010}; do echo \$NUM | envsubst  ; done
+  813  for NUM in {001..010}; do echo \${NUM} | envsubst  ; done
+  814  for NUM in {001..010}; do echo \${NUM}  ; done
+  815  for NUM in {001..010}; do export NUM; echo \${NUM}  ; done
+  816  for NUM in {001..010}; do export NUM; echo \${NUM} | envsubst  ; done
+  817  for NUM in {1..10}; do export NUM | cat ubuntu-jammy-vm.yaml | envsubst ; done
+  818  for NUM in {1..10}; do export NUM | cat ubuntu-jammy-vm.yaml | envsubst | kubectl export -f - ; done
+  819  for NUM in {1..10}; do export NUM | cat ubuntu-jammy-vm.yaml | envsubst | kubectl create -f - ; done
+  820  kubectl get vms
+  821  kubectl delete vms --all
+  822  kubectl get vms
+  823  for NUM in {1..10}; do export NUM | cat ubuntu-jammy-vm.yaml | envsubst | kubectl create -f - ; done
+  824  kubectl get vd
+  825  kubectl get dv
+  826  kubectl delete dv --all
+  827  kubectl delete pv --all
+  828  kubectl delete pvc --all
+  829  kubectl get all
+  830  kubectl delete vm --all
+  831  kubectl get vms
+  832  kubectl get pv
+  833  kubectl get pvc
+  834  kubectl get vm
+  835  for NUM in {1..10}; do export NUM | cat ubuntu-jammy-vm.yaml | envsubst | kubectl create -f - ; done
+  836  kubectl get vm
+  837  kubectl describe  vm
+  838  kubectl get vm -o yaml
+  839  kubectl get vm -o wide
+  840  virtctl console ubuntu-jammy-1
+  841  kubectl get po -o wide
+  842  kubectl delete vm
+  843  kubectl delete vm --all
+  844  kubectl delete pvc, pv, dv
+  845  kubectl delete pvc, pv, dv --all
+  846  kubectl delete pvc --all
+  847  kubectl delete dv --all
+  848  kubectl delete pv --all
+  849  kubectl delete vm --all
+  850  ls
+  851  vim ubuntu-jammy-vm.yaml 
+  852  kubectl get vms
+  853  kubectl get vm
+  854  ls
+  855  kubectl get vmi
+  856  kubectl get all
+  857  ls
+  858  history
+  859  ls
+  860  cd kube-virt/
+  861  ls
+  862  cd ..
+  863  lsl
+  864  ls
+  865  cp * kube-virt/
+  866  ls
+  867  history
+  868  history > kube-virt/history-dump

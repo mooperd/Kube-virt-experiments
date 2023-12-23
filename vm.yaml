@@ -1,0 +1,49 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: vm002
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/size: large
+        kubevirt.io/domain: vm001
+    spec:
+      domain:
+        devices:
+          disks:
+            - name: containerdisk
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+          interfaces:
+          - name: default
+            masquerade: {}
+        resources:
+          requests:
+            memory: 4G
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+        - name: containerdisk
+          containerDisk:
+            image: quay.io/kubevirt/fedora-with-test-tooling-container-disk
+        - cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              hostname: vm002
+              ssh_pwauth: True
+              disable_root: false
+              ssh_authorized_keys:
+              - ssh-rsa ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPmVDeJQwc8V8bJKMONG8NNQT4IgZ6fqU7U2hefQqvzc
+              write_files:
+              - content: "curl -sfL https://get.k3s.io | sh -"
+                path: /tmp/x-shellscript-per-once.sh
+                permissions: '0500'
+                owner: root:root
+              x-shellscript-per-once: /tmp/x-shellscript-per-once.sh
+          name: cloudinitdisk

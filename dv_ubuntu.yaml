@@ -1,0 +1,14 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: "ubuntu-jammy-img-meow"
+  annotations:
+    cdi.kubevirt.io/storage.bind.immediate.requested
+spec:
+  storage:
+    resources:
+      requests:
+        storage: 5Gi
+  source:
+    http:
+      url: "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64-disk-kvm.img"

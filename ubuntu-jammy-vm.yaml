@@ -1,0 +1,63 @@
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: ubuntu-jammy-img-$NUM
+spec:
+  storage:
+    resources:
+      requests:
+        storage: 5Gi
+  source:
+    http:
+      url: "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  creationTimestamp: 2018-07-04T15:03:08Z
+  generation: 1
+  labels:
+    kubevirt.io/os: linux
+  name: ubuntu-jammy-$NUM
+spec:
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: vm1
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: disk0
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: cloudinitdisk
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 1024M
+      volumes:
+      - name: disk0
+        persistentVolumeClaim:
+          claimName: ubuntu-jammy-img-$NUM
+      - cloudInitNoCloud:
+          userData: |
+            #cloud-config
+            user: ubuntu
+            password: X9deiX9dei
+            chpasswd: { expire: False }
+            hostname: ubuntu-jammy-$NUM
+            ssh_pwauth: true
+            disable_root: false
+            ssh_authorized_keys:
+            - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEv2OUtFaQO8Ie/mw/wA5ZYSTWS3MUPLYY8a8x35MtNa 
+        name: cloudinitdisk
